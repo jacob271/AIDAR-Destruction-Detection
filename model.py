@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Sep  4 16:53:08 2019
-
-@author: hec
-"""
 import keras
 from keras import backend as K
 from keras.layers import Input, Dense, Multiply, Dropout, Lambda, Activation

@@ -1,7 +1,7 @@
 import os
 from optparse import OptionParser
 import numpy as np
-import Network
+import model as mdl
 import crf
 import results
 import utility
@@ -16,9 +16,9 @@ def perform_segmentation(path_to_image, apply_crf):
         print("Error: model not available..")
 
     print("loading Trained model..")
-    model = Network.model_attention()
+    model = mdl.model_attention()
     model.load_weights(model_path)
-    mask, name = results.predict_mask(path_to_image=path_to_image, denseModel=model_densenet, model=model,
+    mask, name = results.predict_mask(path_to_image=path_to_image, dense_model=model_densenet, model=model,
                                       patch_size=224, window_stride=64)
     mask2 = np.where(mask > 0.6, 255, 0)
 
