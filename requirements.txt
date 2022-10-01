@@ -1,5 +1,6 @@
 absl-py==1.2.0
 anyio==3.6.1
+asgiref==3.4.1
 astor==0.8.1
 cached-property==1.5.2
 click==8.0.4
@@ -11,6 +12,7 @@ decorator==4.4.2
 fastapi==0.83.0
 gast==0.5.3
 grpcio==1.48.2
+h11==0.13.0
 h5py==2.10.0
 idna==3.4
 imageio==2.15.0
@@ -34,6 +36,7 @@ pydantic==1.9.2
 pydensecrf==1.0rc3
 pyparsing==3.0.9
 python-dateutil==2.8.2
+python-multipart==0.0.5
 PyWavelets==1.1.1
 PyYAML==6.0
 scikit-image==0.17.2
@@ -50,5 +53,6 @@ termcolor==1.1.0
 threadpoolctl==3.1.0
 tifffile==2020.9.3
 typing_extensions==4.1.1
+uvicorn==0.16.0
 Werkzeug==2.0.3
 zipp==3.6.0
