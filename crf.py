@@ -5,7 +5,6 @@ Created on Wed Sep 11 14:25:17 2019
 
 @author: hec
 """
-import os
 
 import cv2
 import imageio
@@ -15,9 +14,7 @@ from pydensecrf.utils import create_pairwise_bilateral, unary_from_softmax
 from skimage.io import imsave
 
 
-def perform_crf(mask, image_name, crf_mask_dir):
-    imagename = image_name.split("/")[-1]
-    imagename = imagename.split(".")[0]
+def perform_crf(mask, image_name):
     img = cv2.imread(image_name)
     imsave("temp.png", mask)
     anno_rgb = imageio.imread("temp.png").astype(np.uint32)
@@ -50,6 +47,4 @@ def perform_crf(mask, image_name, crf_mask_dir):
     Q = crf.inference(20)
     MAP = np.argmax(Q, axis=0)
     MAP = colorize[MAP]
-    if not (os.path.exists(crf_mask_dir)):
-        os.mkdir(crf_mask_dir)
-    cv2.imwrite(crf_mask_dir + '/' + imagename + ".png", MAP.reshape(anno_rgb.shape))
+    return MAP.reshape(anno_rgb.shape)
