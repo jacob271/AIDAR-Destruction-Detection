@@ -37,6 +37,6 @@ def perform_crf(mask, image_name):
                           normalization=dcrf.NORMALIZE_SYMMETRIC)
 
     Q = crf.inference(20)
-    MAP = np.argmax(Q, axis=0)
-    MAP = colorize[MAP]
-    return MAP.reshape(anno_rgb.shape)
+    mat = np.argmax(Q, axis=0)
+    mat = colorize[mat]
+    return mat.reshape(anno_rgb.shape)

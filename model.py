@@ -14,7 +14,6 @@ def custom_loss(layer):
     def loss(y_true, y_pred):
         return K.binary_crossentropy(y_true, y_pred) + (0.3 * K.sum(layer2, axis=-1))
 
-    # Return a function
     return loss
 
 
