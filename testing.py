@@ -153,7 +153,7 @@ imageslist.extend(glob.glob(nondest_dir))
 #model 1 loading
 """
 model1_path = os.path.join("models", options.model1_name)
-if (os.path.exists(model1_path)):
+if os.path.exists(model1_path):
 
     print("loading Trained model..")
     model1 = Network.model_attention()
@@ -166,7 +166,7 @@ else:
 #model Retrain loading
 """
 model_retrain_path = os.path.join("models", options.model_retrain_name)
-if (os.path.exists(model_retrain_path)):
+if os.path.exists(model_retrain_path):
 
     print("loading Retrained model..")
     model_retrain = Network.model_attention()

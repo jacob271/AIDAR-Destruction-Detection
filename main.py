@@ -1,16 +1,19 @@
-from fastapi import FastAPI
 import cv2
+import numpy as np
+from PIL import Image
+
 import segmentation as seg
+from fastapi import FastAPI
 from fastapi import File
 from fastapi import UploadFile
-from PIL import Image
-import numpy as np
 
 app = FastAPI()
+
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
 
 @app.post("/seg_image")
 def get_image(file: UploadFile = File(...)):
