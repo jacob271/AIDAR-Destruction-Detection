@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 11 14:25:17 2019
-
-@author: hec
-"""
-
 import cv2
 import imageio
 import numpy as np
