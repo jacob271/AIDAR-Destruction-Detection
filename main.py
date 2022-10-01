@@ -23,10 +23,13 @@ def get_image(file: UploadFile = File(...)):
 
     mask = seg.perform_segmentation("Model1_AttentionNetwork_500.h5", "image.jpg", True)
 
-    cv2.imwrite("mask.png", mask)
+    mask = cv2.threshold(mask, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    image[mask == 255] = (36, 255, 12)
+
+    cv2.imwrite("mask2.png", image)
 
     def iterfile():
-        with open("mask.png", mode="rb") as file_like:
+        with open("mask2.png", mode="rb") as file_like:
             yield from file_like
 
     return StreamingResponse(iterfile(), media_type="image/png")
