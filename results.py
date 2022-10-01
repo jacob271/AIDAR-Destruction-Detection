@@ -80,56 +80,39 @@ def patch_model_prediction(model, test_nondestruct, testdestruct):
     return nondest_acc, dest_acc, over_acc, round(Precision, 2), round(Recall, 2), round(fmeasure, 2)
 
 
-def predictmask(path_to_test, denseModel, model, patch_size=224, window_stride=64):
+def predict_mask(path_to_image, denseModel, model, patch_size=224, window_stride=64):
     patchsize = patch_size
     stride = window_stride
-    path = path_to_test
 
-    dest_dir = os.path.join(path, "destructed", "*.jpg")
-    nondest_dir = os.path.join(path, "non_destructed", "*.jpg")
+    image1 = cv2.imread(path_to_image)
+    imgpatches = patchify(image1, (patchsize, patchsize, 3), step=stride)
+    mask1 = np.zeros((image1.shape[0], image1.shape[1]))
+    mask2 = np.zeros((image1.shape[0], image1.shape[1]))
 
-    imageslist = []
-    imageslist.extend(glob.glob(dest_dir))
-    imageslist.extend(glob.glob(nondest_dir))
+    patches1 = utility.convert_patches_to_list(imgpatches)
+    patches1 = utility.preprocessing_patcheslist(patches1)
+    features = denseModel.predict(patches1)
+    features = np.reshape(features, (-1, 1, 1024))
+    scoreslist = model.predict(features)
+    scoreslist = np.reshape(scoreslist, (len(scoreslist)))
 
-    predictedmasklist = []
-    # for modelname in models:
-    #   model.load_weights(modelname)
-    for k in range(len(imageslist)):
+    for i in range(len(scoreslist)):
+        col = i // int(imgpatches.shape[1])
+        row = i % int(imgpatches.shape[1])
 
-        imagepath = imageslist[k]
-        name = imageslist[k].split("/")[-1]
-        image1 = cv2.imread(imagepath)
-        imgpatches = patchify(image1, (patchsize, patchsize, 3), step=stride)
-        mask1 = np.zeros((image1.shape[0], image1.shape[1]))
-        mask2 = np.zeros((image1.shape[0], image1.shape[1]))
+        x1 = (row * stride)
+        y1 = (col * stride)
+        x2 = x1 + patchsize
+        y2 = y1 + patchsize
 
-        patches1 = utility.convert_patches_to_list(imgpatches)
-        patches1 = utility.preprocessing_patcheslist(patches1)
-        features = denseModel.predict(patches1)
-        features = np.reshape(features, (-1, 1, 1024))
-        scoreslist = model.predict(features)
-        scoreslist = np.reshape(scoreslist, (len(scoreslist)))
+        mask1[y1:y2, x1:x2] = mask1[y1:y2, x1:x2] + scoreslist[i]
+        mask2[y1:y2, x1:x2] = mask2[y1:y2, x1:x2] + 1
 
-        for i in range(len(scoreslist)):
-            col = i // int(imgpatches.shape[1])
-            row = i % int(imgpatches.shape[1])
-
-            x1 = (row * stride)
-            y1 = (col * stride)
-            x2 = x1 + patchsize
-            y2 = y1 + patchsize
-
-            mask1[y1:y2, x1:x2] = mask1[y1:y2, x1:x2] + scoreslist[i]
-            mask2[y1:y2, x1:x2] = mask2[y1:y2, x1:x2] + 1
-
-        mask1[np.isnan(mask1)] = 0
-        mask2[mask2 == 0] = 1
-        b = mask1 / mask2
-        predictedmasklist.append(b)
-        print("Mask generated of image " + str(k) + "/" + str(len(imageslist)))
-    return predictedmasklist, imageslist
-
+    mask1[np.isnan(mask1)] = 0
+    mask2[mask2 == 0] = 1
+    b = mask1 / mask2
+    print("Mask generated of image " + str(0 + 1) + "/1")
+    return b, path_to_image
 
 def CRF_patch_accuracy():
     patchsize = 224
