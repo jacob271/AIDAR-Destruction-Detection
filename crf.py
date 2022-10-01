@@ -15,7 +15,7 @@ from pydensecrf.utils import create_pairwise_bilateral, unary_from_softmax
 from skimage.io import imsave
 
 
-def CRF(masklist, imageslist):
+def perform_crf(masklist, imageslist, crf_mask_dir):
     for i in range(len(imageslist)):
         imagename = imageslist[i].split("/")[-1]
         imagename = imagename.split(".")[0]
@@ -50,11 +50,8 @@ def CRF(masklist, imageslist):
                               normalization=dcrf.NORMALIZE_SYMMETRIC)
 
         Q = crf.inference(20)
-
         MAP = np.argmax(Q, axis=0)
         MAP = colorize[MAP]
-        crfmaskdir = os.path.join("predicted_masks", "crf_masks")
-        if not (os.path.exists(crfmaskdir)):
-            os.mkdir(crfmaskdir)
-        cv2.imwrite(crfmaskdir + '/' + imagename + ".png", MAP.reshape(anno_rgb.shape))
-    return crfmaskdir
+        if not (os.path.exists(crf_mask_dir)):
+            os.mkdir(crf_mask_dir)
+        cv2.imwrite(crf_mask_dir + '/' + imagename + ".png", MAP.reshape(anno_rgb.shape))
