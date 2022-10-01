@@ -6,18 +6,12 @@ Created on Wed Sep 11 14:25:17 2019
 @author: hec
 """
 import numpy as np
-import scipy
 import os
 import pydensecrf.densecrf as dcrf
-import cv2
 import imageio
 import cv2
-import Network
-from skimage.io import imread, imsave
-import scipy
-import matplotlib
-from pydensecrf.utils import unary_from_labels, create_pairwise_bilateral, create_pairwise_gaussian,unary_from_softmax
-
+from skimage.io import imsave
+from pydensecrf.utils import create_pairwise_bilateral, unary_from_softmax
 
 
 def CRF(masklist,imageslist):

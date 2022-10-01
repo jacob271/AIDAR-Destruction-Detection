@@ -10,7 +10,6 @@ import numpy as np
 import cv2
 import results
 import Network
-from imageio import imread, imsave
 import crf
 import utility
 import os
