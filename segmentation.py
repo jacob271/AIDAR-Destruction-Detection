@@ -29,7 +29,7 @@ def perform_segmentation(model_name, path_to_image, mask_dir, apply_crf,
         model = Network.model_attention()
         model.load_weights(model_path)
         mask, name = results.predict_mask(path_to_image=path_to_image, denseModel=model_densenet, model=model,
-                                                 patch_size=224, window_stride=64)
+                                          patch_size=224, window_stride=64)
         if not (os.path.exists(mask_dir)):
             print("Making new directory for masks")
             os.mkdir(mask_dir)

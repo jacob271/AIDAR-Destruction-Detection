@@ -114,6 +114,7 @@ def predict_mask(path_to_image, denseModel, model, patch_size=224, window_stride
     print("Mask generated of image " + str(0 + 1) + "/1")
     return b, path_to_image
 
+
 def CRF_patch_accuracy():
     patchsize = 224
     stride = 64
