@@ -5,3 +5,7 @@ python-multipart
 patchify
 numpy
 cpython
+imageio
+scikit-image
+uvicorn
+
