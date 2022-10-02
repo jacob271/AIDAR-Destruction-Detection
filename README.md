@@ -10,6 +10,8 @@ Make sure to have `python3.8` or newer installed.
 
 Install the requirements with `pip install -r requirements.txt`.
 
+If you have trouble installing pydensecrf, check out [this discussion](https://github.com/lucasb-eyer/pydensecrf/issues/78).
+
 Start the flask server with `uvicorn aidar:app`.
 
 ### Manually analysing an image
