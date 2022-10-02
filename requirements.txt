@@ -1,0 +1,7 @@
+tensorflow
+opencv-python
+fastapi
+python-multipart
+patchify
+numpy
+cpython
