@@ -6,7 +6,7 @@ This repository is used to provide an api to identify destroyed areas in satelli
 
 ## Setup and Installation
 
-Since this model is based on `tensorflow 1.12.0`, you'll need `python3.6`.
+Make sure to have `python3.8` or newer installed.
 
 Install the requirements with `pip install -r requirements.txt`.
 
