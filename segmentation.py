@@ -56,13 +56,15 @@ def perform_segmentation(path_to_image, apply_crf):
     mask, name = predict_mask(path_to_image=path_to_image, dense_model=model_densenet, model=model,
                                       patch_size=224, window_stride=64)
     mask2 = np.where(mask > 0.6, 255, 0)
+    cv2.imwrite("tempmask.png", mask2)
 
     if apply_crf:
         print("Applying Crf...")
         crf_mask = crf.perform_crf(mask, path_to_image)
         return crf_mask
     else:
-        return mask2
+
+        return cv2.cvtColor(cv2.imread("tempmask.png"), cv2.COLOR_BGR2GRAY)
 
 
 if __name__ == "__main__":

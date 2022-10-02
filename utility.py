@@ -1,11 +1,11 @@
-import keras
 import numpy as np
+import tensorflow as tf
 from keras.models import Model
 
 
 def load_denseNet():
-    densenet = keras.applications.densenet.DenseNet121(include_top=True, weights='imagenet', input_tensor=None,
-                                                       input_shape=None, pooling=None, classes=1000)
+    densenet = tf.keras.applications.densenet.DenseNet121(include_top=True, weights='imagenet', input_tensor=None,
+                                                          input_shape=None, pooling=None, classes=1000)
 
     fclast = densenet.get_layer("avg_pool").output
     modeldense = Model(inputs=densenet.input, outputs=fclast)
